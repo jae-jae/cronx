@@ -1,0 +1,18 @@
+env:
+  LANG: en_US.UTF-8
+
+tasks:
+  task1:
+    schedule: "@every 1s"
+    commands:
+      - echo "hello world1!"
+
+  task2:
+    schedule: "@every 2s"
+    dir: /tmp
+    commands:
+      - echo "hello world2!"
+      - echo $key1 > 1.txt
+      - ls -la /tmp/
+    env:
+      key1: val1
