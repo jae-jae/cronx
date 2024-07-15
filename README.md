@@ -1,22 +1,49 @@
-# cronx
-A cross-platform lightweight task scheduler
+# Cronx
+
+A cross-platform lightweight task scheduler.
+
+## Introduction
+
+Cronx is a cross-platform, lightweight task scheduler designed to simplify the management of scheduled tasks. It allows you to define and execute tasks with ease using simple configuration files. Whether you're automating scripts or setting up regular maintenance tasks, Cronx provides a flexible and efficient solution.
+
+## Installation
+
+To get started with Cronx, you need to have Golang installed. You can install Cronx using the following command:
+
+
+```shell
+go install github.com/jae-jae/cronx@latest
+```
 
 ## Usage
 
-Run cron task:
+Run a cron task:
 ```shell
 cronx
 ```
 
-Run tasks once, usually for testing purposes:
+Specify the configuration file path: 
 ```shell
-cronx run task1 task2
+cronx -c cornx.yaml
 ```
 
+Run tasks once, typically for testing purposes:
 
-## Config
 
-The simplest configuration:
+```shell
+cronx run task1 task2
+# or
+cronx -c cornx.yaml run task1 task2
+```
+
+## Configuration
+The configuration file `cronx.yaml` is used to define tasks and their schedules. By default, Cronx looks for this file in the current directory.
+
+### Basic Configuration
+
+Below is an example of a basic configuration:
+
+
 ```yaml
 # scheduled task list
 tasks:
@@ -26,12 +53,15 @@ tasks:
       - echo "hello world1!"
 ```
 
-Complete configuration:
+### Complete Configuration
+
+Here is an example of a more complete configuration:
+
+
 ```yaml
 # global Settings
 settings:
   timezone: "UTC"
-
 
 # set global environment variables.
 env:
@@ -55,25 +85,26 @@ tasks:
       key1: val1
 ```
 
-Configuration instructions for `cronx.yaml`:
+### Configuration Instructions
+The following table describes the fields used in the `cronx.yaml` configuration file:
 
-| Field                   | Default                         | Description                                       |
-|-------------------------|---------------------------------|---------------------------------------------------|
-| settings                |                                 | global Settings                                   |
-| settings.timezone       | (current server time zone)      | set cron job time zone                            |
-| env                     |                                 | set global environment variables                  |
-| tasks                   |                                 | scheduled task list                               |
-| tasks.[taskID]          |                                 | define a unique task ID                           |
-| tasks.[taskID].schedule |                                 | cron expression                                   |
-| tasks.[taskID].dir      | (folder where cronx is running) | set the folder for command execution              |
-| tasks.[taskID].commands |                                 | command list                                      |
-| tasks.[taskID].env      |                                 | set environment variables for the current command |
+| Field                   | Default                     | Description                                   |
+|-------------------------|-----------------------------|-----------------------------------------------|
+| settings                |                             | Global settings                               |
+| settings.timezone       | (current server time zone)  | Set the cron job time zone                    |
+| env                     |                             | Global environment variables                  |
+| tasks                   |                             | Scheduled task list                           |
+| tasks.[taskID]          |                             | Unique task ID                                |
+| tasks.[taskID].schedule |                             | Cron expression                               |
+| tasks.[taskID].dir      | (current working directory) | Directory for command execution               |
+| tasks.[taskID].commands |                             | List of commands                              |
+| tasks.[taskID].env      |                             | Environment variables for the current command |
 
-## Cron expression
+## Cron Expressions
+For detailed documentation, refer to the [robfig/cron documentation](https://pkg.go.dev/github.com/robfig/cron) .
 
-> Reference documentation: https://pkg.go.dev/github.com/robfig/cron
+A cron expression consists of six space-separated fields:
 
-A cron expression represents a set of times, using 6 space-separated fields.
 ```shell
 * * * * * *
 | | | | | |
@@ -85,9 +116,9 @@ A cron expression represents a set of times, using 6 space-separated fields.
 +------------ Day of the week (0 - 6) (or SUN-SAT)
 ```
 
-**Predefined schedules:**
+### Predefined Schedules
 
-You may use one of several pre-defined schedules in place of a cron expression.
+You can use predefined schedules instead of a cron expression:
 
 | Entry                  | Description                                | Equivalent To |
 |------------------------|--------------------------------------------|---------------|
@@ -97,19 +128,20 @@ You may use one of several pre-defined schedules in place of a cron expression.
 | @daily (or @midnight)  | Run once a day, midnight                   | 0 0 0 * * *   |
 | @hourly                | Run once an hour, beginning of hour        | 0 0 * * * *   |
 
-**Intervals:**
+### Intervals
 
-You may also schedule a job to execute at fixed intervals, starting at the time it's added or cron is run. This is supported by formatting the cron spec like this:
+You can also schedule jobs to execute at fixed intervals:
+
 
 ```shell
 @every <duration>
 ```
+where "duration" is a string accepted by `time.ParseDuration` (http://golang.org/pkg/time/#ParseDuration). 
 
-where "duration" is a string accepted by time.ParseDuration (http://golang.org/pkg/time/#ParseDuration).
+For example, `@every 1h30m10s` schedules a job to run every 1 hour, 30 minutes, and 10 seconds.
 
-For example, `@every 1h30m10s` would indicate a schedule that activates after 1 hour, 30 minutes, 10 seconds, and then every interval after that.
+Note: The interval does not account for the job runtime. If a job takes 3 minutes to run and is scheduled to run every 5 minutes, there will be 2 minutes of idle time between runs.
 
-Note: The interval does not take the job runtime into account. For example, if a job takes 3 minutes to run, and it is scheduled to run every 5 minutes, it will have only 2 minutes of idle time between each run.
+## Related Projects
 
-## Related projects
 - [robfig/cron](https://github.com/robfig/cron)

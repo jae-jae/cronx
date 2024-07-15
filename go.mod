@@ -1,4 +1,4 @@
-module github.com/jae-jae/cron-task
+module github.com/jae-jae/cronx
 
 go 1.22.4
 
