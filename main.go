@@ -1,6 +1,6 @@
 package main
 
-import "github.com/jae-jae/cron-task/cron"
+import "github.com/jae-jae/cronx/cron"
 
 func main() {
 	cron.Run()
