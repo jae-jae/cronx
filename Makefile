@@ -7,7 +7,7 @@ init:
 .PHONY: build
 # build app
 build:
-	gox -output="bin/{{.Dir}}_{{.OS}}_{{.Arch}}"
+	gox -os="linux darwin windows" -arch="amd64 arm arm64" -output="bin/{{.Dir}}_{{.OS}}_{{.Arch}}"
 
 # show help
 help:

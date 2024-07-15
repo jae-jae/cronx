@@ -19,7 +19,7 @@ go install github.com/jae-jae/cronx@latest
 ```
 
 ### Downloading from GitHub Releases
-Alternatively, you can download the pre-built binary from the [releases page](https://github.com/jae-jae/cronx/cronx/releases)  on GitHub. Choose the appropriate version for your operating system, download the binary, and add it to your system's PATH.
+Alternatively, you can download the pre-built binary from the [releases page](https://github.com/jae-jae/cronx/releases)  on GitHub. Choose the appropriate version for your operating system, download the binary, and add it to your system's PATH.
 
 
 ## Usage
