@@ -8,12 +8,19 @@ Cronx is a cross-platform, lightweight task scheduler designed to simplify the m
 
 ## Installation
 
-To get started with Cronx, you need to have Golang installed. You can install Cronx using the following command:
+You can install Cronx using one of the following methods:
 
+### Using `go install`
+
+Ensure you have Golang installed, then run the following command:
 
 ```shell
 go install github.com/jae-jae/cronx@latest
 ```
+
+### Downloading from GitHub Releases
+Alternatively, you can download the pre-built binary from the [releases page](https://github.com/jae-jae/cronx/cronx/releases)  on GitHub. Choose the appropriate version for your operating system, download the binary, and add it to your system's PATH.
+
 
 ## Usage
 
