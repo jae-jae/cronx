@@ -1,6 +1,13 @@
+# global Settings
+settings:
+  timezone: "UTC"
+
+
+# set global environment variables.
 env:
   LANG: en_US.UTF-8
 
+# scheduled task list
 tasks:
   task1:
     schedule: "@every 1s"

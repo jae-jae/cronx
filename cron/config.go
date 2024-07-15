@@ -1,13 +1,19 @@
 package cron
 
 import (
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
 )
 
 type Config struct {
-	Env   map[string]string `yaml:"env"`
-	Tasks map[string]*Task  `yaml:"tasks"`
+	Settings *Settings         `yaml:"settings"`
+	Env      map[string]string `yaml:"env"`
+	Tasks    map[string]*Task  `yaml:"tasks"`
+}
+
+type Settings struct {
+	Timezone string `yaml:"timezone"`
 }
 
 type Task struct {
@@ -39,6 +45,7 @@ func LoadConfig(path string) (*Config, error) {
 		path = "./cronx.yaml"
 	}
 
+	log.Infof("load config from %s", path)
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err

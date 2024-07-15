@@ -1,7 +1,6 @@
 package cron
 
 import (
-	cronExecutor "github.com/robfig/cron/v3"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"os"
@@ -72,7 +71,11 @@ func (c *CMD) runTaskCmd() {
 }
 
 func (c *CMD) runCron(config *Config) (func(), error) {
-	ce := cronExecutor.New()
+	ce, err := NewCronExecutor(config)
+	if err != nil {
+		return nil, err
+	}
+
 	for taskID, task := range config.Tasks {
 		_, err := ce.AddFunc(task.Schedule, func() {
 			executor := TaskExecutor{
