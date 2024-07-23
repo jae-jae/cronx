@@ -56,14 +56,15 @@ func (c *CMD) runTaskCmd() {
 			if err != nil {
 				log.Fatalf("load config failed: %v", err)
 			}
-			for _, task := range args {
+			for _, taskID := range args {
+				log.Infof("run task: %s", taskID)
 				executor := TaskExecutor{
 					Config: config,
-					TaskID: task,
+					TaskID: taskID,
 				}
 				err := executor.Exec()
 				if err != nil {
-					log.Errorf("task %s exec failed: %v", task, err)
+					log.Errorf("task %s exec failed: %v", taskID, err)
 				}
 			}
 		},
