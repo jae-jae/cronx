@@ -78,6 +78,7 @@ func (c *CMD) runCron(config *Config) (func(), error) {
 
 	for taskID, task := range config.Tasks {
 		_, err := ce.AddFunc(task.Schedule, func() {
+			log.Infof("run task: %s", taskID)
 			executor := TaskExecutor{
 				Config: config,
 				TaskID: taskID,
